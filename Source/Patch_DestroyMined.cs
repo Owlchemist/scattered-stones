@@ -21,16 +21,17 @@ namespace ScatteredStones
 	[HarmonyPatch(typeof(Building), "SpawnSetup")]
 	public class Patch_SpawnSetup
 	{
-		//Unlike the filth under the rock chunks, the ones under mineables never get their timers reset. To prevent despawning immediately, we do the reset upon mining.
+		//When a new building is spawned, we check the adjacent cells to see if it created an impassible situtation that makes filth unreachable, which could otherwise cause the standing bug
 		static public void Postfix(ref Building __instance)
 		{
 			if (__instance == null) return;
 
 			Map map = __instance.Map;
 			if (map.AgeInDays == 0) return;
-			if (__instance.Position != null && __instance.def.passability == Traversability.Impassable)
+
+			if (__instance.Position != null)
 			{
-				GenAdjFast.AdjacentCellsCardinal(__instance.Position).Where(x => x.InBounds(map)).ToList().ForEach(y => map.GetComponent<MapComponent_ScatteredStones>()?.ValidateCell(y, true));
+				__instance.OccupiedRect().AdjacentCellsCardinal.Where(x => x.InBounds(map) && x.Impassable(map)).ToList().ForEach(y => map.GetComponent<MapComponent_ScatteredStones>().ValidateCell(y, true));
 			}
 		}
     }
