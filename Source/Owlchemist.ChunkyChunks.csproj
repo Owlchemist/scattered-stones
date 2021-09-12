@@ -45,12 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefModExtension_RandomDraw.cs" />
-    <Compile Include="MapComponent_ChunkyChunks.cs" />
+    <Compile Include="MapComponent_ScatteredStones.cs" />
     <Compile Include="Graphic_RandomSpread.cs" />
     <Compile Include="ResourceBank.cs" />
     <Compile Include="Patch_DestroyMined.cs" />
     <Compile Include="Patch_DefGenerator.cs" />
-    <Compile Include="Mod_ChunkyChunks.cs" />
+    <Compile Include="Mod_ScatteredStones.cs" />
     <Compile Include="Filth_Rocks.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

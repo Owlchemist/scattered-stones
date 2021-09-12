@@ -2,7 +2,7 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using System.Linq;
-using static ScatteredStones.Mod_ChunkyChunks;
+using static ScatteredStones.Mod_ScatteredStones;
 using static ScatteredStones.ResourceBank.ThingDefOf;
 
 
@@ -64,9 +64,8 @@ namespace ScatteredStones
 					this.ThickenFilth();
 					return;
 				}
-                //Else delete as normal
-				else this.DeSpawn(mode);
             }
+            this.DeSpawn(mode);
         }
 	}   
 }

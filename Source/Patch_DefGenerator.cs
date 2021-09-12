@@ -12,8 +12,8 @@ namespace ScatteredStones
     {
         static void Postfix()
         {
-            Mod_ChunkyChunks.stoneChunks = DefDatabase<ThingDef>.AllDefsListForReading.Where(x => x.thingCategories != null && x.thingCategories.Contains(StoneChunks));
-            Mod_ChunkyChunks.stoneCliff = DefDatabase<ThingDef>.AllDefsListForReading.Where(x => x.building != null && x.building.isNaturalRock && !x.building.isResourceRock);
+            Mod_ScatteredStones.stoneChunks = DefDatabase<ThingDef>.AllDefsListForReading.Where(x => x.thingCategories != null && x.thingCategories.Contains(StoneChunks));
+            Mod_ScatteredStones.stoneCliff = DefDatabase<ThingDef>.AllDefsListForReading.Where(x => x.building != null && x.building.isNaturalRock && !x.building.isResourceRock);
         }
     }
 }
