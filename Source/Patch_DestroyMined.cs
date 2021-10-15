@@ -7,7 +7,7 @@ using static ScatteredStones.ResourceBank.ThingDefOf;
 
 namespace ScatteredStones
 {
-	[HarmonyPatch(typeof(Mineable), "DestroyMined")]
+	[HarmonyPatch(typeof(Mineable), nameof(Mineable.DestroyMined))]
 	public class Patch_Destroy
 	{
 		//Unlike the filth under the rock chunks, the ones under mineables never get their timers reset. To prevent despawning immediately, we do the reset upon mining.
@@ -18,7 +18,7 @@ namespace ScatteredStones
 		}
     }
 
-	[HarmonyPatch(typeof(Building), "SpawnSetup")]
+	[HarmonyPatch(typeof(Building), nameof(Building.SpawnSetup))]
 	public class Patch_SpawnSetup
 	{
 		//When a new building is spawned, we check the adjacent cells to see if it created an impassible situtation that makes filth unreachable, which could otherwise cause the standing bug

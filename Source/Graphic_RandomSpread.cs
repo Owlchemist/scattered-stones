@@ -5,9 +5,6 @@ using System.Collections.Generic;
 
 namespace ScatteredStones
 {
-    ///<summary>
-	///Same as graphic random, but allows random sizes too
-	///</summary>
 	public class Graphic_RandomSpread : Graphic_Random
 	{
 		public Dictionary<int, float[]> sessionCache = new Dictionary<int, float[]>();

@@ -2,12 +2,10 @@ using RimWorld;
 using UnityEngine;
 using Verse;
 using System.Linq;
+using System.Diagnostics;
+using System;
 using static ScatteredStones.Mod_ScatteredStones;
 using static ScatteredStones.ResourceBank.ThingDefOf;
-
-
-using System.Diagnostics;
-
 
 namespace ScatteredStones
 {
@@ -40,7 +38,7 @@ namespace ScatteredStones
             }
             else if (this.Position != null)
             {
-                var stoneChunkHere = this.Map.thingGrid.ThingsListAtFast(this.Position).FirstOrDefault(x => stoneChunks.Contains(x.def));
+                var stoneChunkHere = this.Map.thingGrid.ThingsListAtFast(this.Position).FirstOrDefault(x => Array.IndexOf(stoneChunks, x.def) != -1);
                 if (stoneChunkHere != null) return stoneChunkHere.DrawColor;
             }
             //Default
