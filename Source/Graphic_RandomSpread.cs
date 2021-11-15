@@ -20,7 +20,6 @@ namespace ScatteredStones
 			{
 				if (thing.ThingID != null && thing.def.HasModExtension<RandomDraw>())
 				{
-					//fakeSeed = thing.Position.x + thing.Position.z;
 					int fakeSeed = thing.Position.GetHashCode();
 					var randomDraw = thing.def.GetModExtension<RandomDraw>();
 					randomRotation = Rand.RangeInclusiveSeeded(0, 360, fakeSeed);
@@ -50,9 +49,9 @@ namespace ScatteredStones
 				color,
 				color
 			}, 0.01f, 0f);
-			if (this.ShadowGraphic != null && thing != null)
+			if (thing != null)
 			{
-				this.ShadowGraphic.Print(layer, thing, 0f);
+				this.ShadowGraphic?.Print(layer, thing, 0f);
 			}
 		}
 	}

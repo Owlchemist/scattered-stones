@@ -4,7 +4,7 @@ using Verse;
 using System.Linq;
 using System.Diagnostics;
 using System;
-using static ScatteredStones.Mod_ScatteredStones;
+using static ScatteredStones.ScatteredStonesUtility;
 using static ScatteredStones.ResourceBank.ThingDefOf;
 
 namespace ScatteredStones
@@ -38,7 +38,7 @@ namespace ScatteredStones
             }
             else if (this.Position != null)
             {
-                var stoneChunkHere = this.Map.thingGrid.ThingsListAtFast(this.Position).FirstOrDefault(x => Array.IndexOf(stoneChunks, x.def) != -1);
+                Thing stoneChunkHere = this.Map.thingGrid.ThingsListAtFast(this.Position).FirstOrDefault(x => Array.IndexOf(stoneChunks, x.def) != -1);
                 if (stoneChunkHere != null) return stoneChunkHere.DrawColor;
             }
             //Default
@@ -48,7 +48,7 @@ namespace ScatteredStones
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {			
 			//If the calling methods is a carry drop-off event, or a map refund (happens because it thinks filth shouldn't be under chunks), then ignore. Bit of a hack doing it this way, but it'll until a better method is devised.
-			var method = new StackFrame(2).GetMethod().Name;
+			string method = new StackFrame(2).GetMethod().Name;
 			if (method.Contains("WipeExistingThings") || method.Contains("Refund")) return;
 			
 			//This happens when filth despawns due to age, but we reset its timer if it's still underneath a rock
@@ -57,7 +57,7 @@ namespace ScatteredStones
 				var cell = this.Map.thingGrid.ThingsListAtFast(this.Position).Select(x => x.def);
 				bool flag = cell.Intersect(stoneChunks).Any() || cell.Intersect(stoneCliff).Any();
                 //Reset if true
-				if (flag)
+				if (flag || ScatteredStones.ModSettings_ScatteredStones.neverDespawn)
 				{
 					this.ThickenFilth();
 					return;
