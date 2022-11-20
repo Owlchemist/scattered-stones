@@ -4,6 +4,7 @@ using HarmonyLib;
 using RimWorld;
 using Verse;
 using static ScatteredStones.ResourceBank.ThingDefOf;
+using static ScatteredStones.ModSettings_ScatteredStones;
 
 namespace ScatteredStones
 {
@@ -39,4 +40,21 @@ namespace ScatteredStones
 			}
 		}
     }
+
+	//When something is mined, place filth there
+	[HarmonyPatch(typeof(Mineable), nameof(Mineable.TrySpawnYield))]
+	public class Patch_TrySpawnYield
+	{
+		static public void Postfix(Mineable __instance, Map map)
+		{
+			if (minedFilth && (map.thingGrid.ThingsAt(__instance.Position)?.Any(x => x.def?.thingCategories?.Contains(ResourceBank.ThingCategoryDefOf.StoneChunks) ?? false) ?? false))
+			{
+				Thing rocks = ThingMaker.MakeThing(Owl_Filth_Rocks, null);
+				//Place underneath chunk
+				GenPlace.TryPlaceThing(rocks, __instance.Position, map, ThingPlaceMode.Direct);
+				//Match color
+				rocks.DrawColor = ((Rocks)rocks).MatchColor(__instance);
+			}
+		}
+	}
 }

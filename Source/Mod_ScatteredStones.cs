@@ -32,6 +32,7 @@ namespace ScatteredStones
 
 			options.CheckboxLabeled("ScatteredStones.Settings.AllowOnWater".Translate(), ref allowOnWater, "ScatteredStones.Settings.AllowOnWater.Desc".Translate());
 			options.CheckboxLabeled("ScatteredStones.Settings.NeverDespawn".Translate(), ref neverDespawn, "ScatteredStones.Settings.NeverDespawn.Desc".Translate());
+			options.CheckboxLabeled("ScatteredStones.Settings.MinedFilth".Translate(), ref minedFilth, "ScatteredStones.Settings.MinedFilth.Desc".Translate());
 
 			options.End();
 			base.DoSettingsWindowContents(inRect);
@@ -57,13 +58,11 @@ namespace ScatteredStones
 			Scribe_Values.Look<float>(ref offsetModifier, "offsetModifier", 1, false);
 			Scribe_Values.Look<bool>(ref allowOnWater, "allowOnWater", true, false);
 			Scribe_Values.Look<bool>(ref neverDespawn, "neverDespawn", false, false);
+			Scribe_Values.Look<bool>(ref minedFilth, "minedFilth", true, false);
 			base.ExposeData();
 		}
 
-		static public float minScaleModifier = 1f;
-		static public float maxScaleModifier = 1f;
-		static public float offsetModifier = 1f;
-		static public bool allowOnWater = true;
-		static public bool neverDespawn = false;
+		static public float minScaleModifier = 1f, maxScaleModifier = 1f, offsetModifier = 1f;
+		static public bool allowOnWater = true, minedFilth = true, neverDespawn;
 	}
 }
