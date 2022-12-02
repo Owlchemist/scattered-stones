@@ -1,9 +1,7 @@
 using RimWorld;
 using UnityEngine;
 using Verse;
-using System.Linq;
 using System.Diagnostics;
-using System;
 using static ScatteredStones.ScatteredStonesUtility;
 using static ScatteredStones.ResourceBank.ThingDefOf;
 
@@ -36,32 +34,40 @@ namespace ScatteredStones
             {
                 return matchToThis.DrawColor;
             }
-            else if (this.Position != null)
+            else if (this.positionInt != IntVec3.Invalid)
             {
-                Thing stoneChunkHere = this.Map.thingGrid.ThingsListAtFast(this.Position).FirstOrDefault(x => Array.IndexOf(stoneChunks, x.def) != -1);
-                if (stoneChunkHere != null) return stoneChunkHere.DrawColor;
+                var list = this.Map.thingGrid.ThingsListAtFast(this.Position);
+                var length = list.Count;
+                for (int i = 0; i < length; i++)
+                {
+                    var item = list[i];
+                    if (stoneChunks.Contains(item.def.index))
+                    {
+                        return item.DrawColor;
+                    }
+                }
             }
             //Default
             return ChunkGranite.graphicData.color;
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
-        {			
-			//If the calling methods is a carry drop-off event, or a map refund (happens because it thinks filth shouldn't be under chunks), then ignore. Bit of a hack doing it this way, but it'll until a better method is devised.
-			string method = new StackFrame(2).GetMethod().Name;
-			if (method.Contains("WipeExistingThings") || method.Contains("Refund")) return;
-			
+        {
 			//This happens when filth despawns due to age, but we reset its timer if it's still underneath a rock
-			if (this.TicksSinceThickened >= this.DisappearAfterTicks)
+			if (ModSettings_ScatteredStones.neverDespawn && this.TicksSinceThickened >= this.DisappearAfterTicks)
             {
-				var cell = this.Map.thingGrid.ThingsListAtFast(this.Position).Select(x => x.def);
-				bool flag = cell.Intersect(stoneChunks).Any() || cell.Intersect(stoneCliff).Any();
-                //Reset if true
-				if (flag || ScatteredStones.ModSettings_ScatteredStones.neverDespawn)
-				{
-					this.ThickenFilth();
-					return;
-				}
+                var list = this.Map.thingGrid.ThingsListAtFast(this.Position);
+                var length = list.Count;
+                for (int i = 0; i < length; i++)
+                {
+                    var item = list[i];
+                    //Reset if true
+                    if (stoneChunks.Contains(item.def.index) || stoneCliff.Contains(item.def.index))
+                    {
+                        this.ThickenFilth();
+                        return;
+                    }
+                }
             }
             this.DeSpawn(mode);
         }

@@ -9,11 +9,10 @@ namespace ScatteredStones
 {
 	public class Mod_ScatteredStones : Mod
 	{
-
 		public Mod_ScatteredStones(ModContentPack content) : base(content)
 		{
-			new Harmony(this.Content.PackageIdPlayerFacing).PatchAll();
 			base.GetSettings<ModSettings_ScatteredStones>();
+			new Harmony(this.Content.PackageIdPlayerFacing).PatchAll();
 			LongEventHandler.QueueLongEvent(() => Setup(), null, false, null);
 		}
 
@@ -53,12 +52,12 @@ namespace ScatteredStones
 	{
 		public override void ExposeData()
 		{
-			Scribe_Values.Look<float>(ref minScaleModifier, "minScaleModifier", 1, false);
-			Scribe_Values.Look<float>(ref maxScaleModifier, "maxScaleModifier", 1, false);
-			Scribe_Values.Look<float>(ref offsetModifier, "offsetModifier", 1, false);
-			Scribe_Values.Look<bool>(ref allowOnWater, "allowOnWater", true, false);
-			Scribe_Values.Look<bool>(ref neverDespawn, "neverDespawn", false, false);
-			Scribe_Values.Look<bool>(ref minedFilth, "minedFilth", true, false);
+			Scribe_Values.Look<float>(ref minScaleModifier, "minScaleModifier", 1f);
+			Scribe_Values.Look<float>(ref maxScaleModifier, "maxScaleModifier", 1f);
+			Scribe_Values.Look<float>(ref offsetModifier, "offsetModifier", 1f);
+			Scribe_Values.Look<bool>(ref allowOnWater, "allowOnWater", true);
+			Scribe_Values.Look<bool>(ref neverDespawn, "neverDespawn");
+			Scribe_Values.Look<bool>(ref minedFilth, "minedFilth", true);
 			base.ExposeData();
 		}
 
