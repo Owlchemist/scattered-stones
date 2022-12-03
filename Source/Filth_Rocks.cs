@@ -69,7 +69,7 @@ namespace ScatteredStones
                     }
                 }
             }
-            this.DeSpawn(mode);
+            base.Destroy(mode);
         }
 	}   
 }

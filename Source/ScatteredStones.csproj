@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<Product>Scattered Stones</Product>
-		<AssemblyVersion>1.5</AssemblyVersion>
+		<AssemblyVersion>1.5.1</AssemblyVersion>
 		<Version>1.4</Version>
 		<Copyright>2022</Copyright>
 		<Company>Owlchemist</Company>
